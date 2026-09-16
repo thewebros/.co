@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TheWeBros — Websites, Built Right</title>
+<meta name="description" content="TheWeBros — Jai & Vipul build fast, animated websites for small businesses. Fixed pricing, fast delivery.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff; --bg-soft:#f5f6f8;
+    --ink:#14171f; --ink-soft:#5b6472; --ink-faint:#9aa2ae;
+    --teal:#0d9488; --teal-dark:#0b7a70; --teal-soft:#e6f7f5;
+    --coral:#ff5a5f; --coral-dark:#e6484d; --coral-soft:#ffe7e8;
+    --card:#1b1710;
+    --border:#eceef1;
+    --radius:20px;
+    --ease:cubic-bezier(.22,.9,.32,1);
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Inter', sans-serif; line-height:1.6;
+    padding-bottom:78px; /* room for bottom nav */
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Poppins', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  img,svg{ display:block; }
+  .wrap{ max-width:520px; margin:0 auto; padding:0 20px; }
+  .wrap-wide{ max-width:900px; margin:0 auto; padding:0 20px; }
+
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:700; border-radius:14px; padding:14px 22px; font-size:0.95rem; transition:transform .25s var(--ease), box-shadow .25s var(--ease); cursor:pointer; border:none; }
+  .btn-coral{ background:var(--coral); color:#fff; box-shadow:0 8px 20px -6px rgba(255,90,95,0.5); }
+  .btn-coral:hover{ transform:translateY(-2px); box-shadow:0 12px 24px -6px rgba(255,90,95,0.6); }
+  .btn-teal{ background:var(--teal); color:#fff; box-shadow:0 8px 20px -6px rgba(13,148,136,0.45); }
+  .btn-teal:hover{ transform:translateY(-2px); }
+  .btn-outline{ background:#fff; color:var(--ink); border:1.5px solid var(--border); }
+  .btn-outline:hover{ border-color:var(--ink); }
+
+  /* ============ TOP OFFER BAR ============ */
+  .offer-bar{ background:var(--bg-soft); padding:14px 20px; text-align:center; }
+  .offer-pill{ display:inline-flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--border); border-radius:999px; padding:8px 18px; font-size:0.82rem; font-weight:600; box-shadow:0 2px 10px rgba(0,0,0,0.04); }
+  .offer-pill .tag{ color:var(--coral); font-weight:800; }
+
+  /* ============ HEADER ============ */
+  header{ background:var(--bg-soft); padding:18px 20px 22px; }
+  .navbar{ display:flex; align-items:center; gap:14px; max-width:520px; margin:0 auto; }
+  .hamburger{ display:flex; flex-direction:column; gap:4px; cursor:pointer; }
+  .hamburger span{ width:20px; height:2px; background:var(--ink); border-radius:2px; }
+  .hamburger{background:none;border:0;padding:4px;position:relative;z-index:3}
+  .mobile-menu{display:none;position:absolute;top:70px;left:20px;right:20px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:0 12px 30px rgba(0,0,0,.12);z-index:2}
+  .mobile-menu.open{display:flex;flex-direction:column;gap:4px}
+  .mobile-menu a{padding:12px;border-radius:10px;font-weight:700}
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo-mark{ width:34px; height:34px; border-radius:50%; background:var(--coral); display:flex; align-items:center; justify-content:center; }
+  .logo-mark svg{ width:16px; height:16px; color:#fff; }
+  .logo-text{ font-family:'Poppins',sans-serif; font-weight:800; font-size:1.15rem; letter-spacing:-0.01em; }
+  .logo-text span{ font-weight:500; color:var(--ink-soft); }
+
+  .tagline{ text-align:center; margin-top:20px; font-size:0.92rem; font-weight:600; color:var(--ink-faint); max-width:520px; margin-left:auto; margin-right:auto; }
+  .tagline b{ color:var(--ink); }
+
+  .tabs{ display:flex; justify-content:center; gap:34px; margin-top:22px; max-width:520px; margin-left:auto; margin-right:auto; }
+  .tab{ font-family:'Poppins',sans-serif; font-weight:600; font-size:0.98rem; color:var(--ink-faint); padding-bottom:8px; border-bottom:3px solid transparent; }
+  .tab.active{ color:var(--coral); border-color:var(--coral); }
+
+  .cta-bar{ display:flex; align-items:center; gap:10px; margin-top:20px; background:#fff; border:1px solid var(--border); border-radius:999px; padding:8px 8px 8px 22px; max-width:520px; margin-left:auto; margin-right:auto; box-shadow:0 4px 18px rgba(0,0,0,0.05); }
+  .cta-bar span{ flex:1; color:var(--ink-faint); font-size:0.92rem; }
+  .cta-bar .go{ width:44px; height:44px; border-radius:50%; background:var(--coral); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .cta-bar .go svg{ width:18px; height:18px; color:#fff; }
+
+  /* ============ HERO PROMO CARD ============ */
+  .promo-dark{ background:var(--card); border-radius:24px; padding:30px 26px; margin-top:26px; position:relative; overflow:hidden; max-width:520px; margin-left:auto; margin-right:auto; }
+  .promo-dark h2{ color:#fff; font-size:1.4rem; font-weight:700; max-width:70%; line-height:1.3; }
+  .promo-dark ul{ list-style:none; margin-top:16px; display:flex; flex-direction:column; gap:8px; }
+  .promo-dark li{ color:rgba(255,255,255,0.75); font-size:0.88rem; display:flex; align-items:center; gap:8px; }
+  .promo-dark li svg{ width:15px; height:15px; color:var(--coral); flex-shrink:0; }
+  .promo-dark .btn{ margin-top:20px; }
+  .promo-graphic{ position:absolute; right:-10px; bottom:-10px; width:130px; height:130px; opacity:0.9; }
+
+  /* ============ SECTIONS ============ */
+  section{ padding:44px 0; }
+  .section-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; max-width:520px; margin-left:auto; margin-right:auto; padding:0 20px; }
+  .section-head h2{ font-size:1.3rem; font-weight:700; }
+  .see-all{ color:var(--teal); font-weight:700; font-size:0.88rem; display:flex; align-items:center; gap:4px; }
+
+  /* ============ PACKAGE PEEK ROW ============ */
+  .peek-row{ display:flex; gap:14px; overflow-x:auto; padding:0 20px 6px; max-width:520px; margin:0 auto; scrollbar-width:none; }
+  .peek-row::-webkit-scrollbar{ display:none; }
+  .peek-card{ flex:0 0 46%; min-width:180px; border-radius:18px; overflow:hidden; position:relative; height:140px; background:linear-gradient(135deg, var(--teal), var(--teal-dark)); }
+  .peek-card.p2{ background:linear-gradient(135deg, #4b3a2a, #241c14); }
+  .peek-card .inner{ padding:16px; height:100%; display:flex; flex-direction:column; justify-content:space-between; }
+  .peek-card h3{ color:#fff; font-size:1rem; font-weight:700; line-height:1.25; }
+  .peek-badge{ align-self:flex-start; background:rgba(255,255,255,0.9); color:var(--ink); font-size:0.72rem; font-weight:800; padding:4px 10px; border-radius:999px; }
+
+  /* ============ FULL PACKAGES GRID ============ */
+  .packages-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:520px; margin:24px auto 0; padding:0 20px; }
+  .package-card{ background:#fff; border:1px solid var(--border); border-radius:18px; padding:20px 18px; transition:transform .3s var(--ease), box-shadow .3s var(--ease); }
+  .package-card:hover{ transform:translateY(-4px); box-shadow:0 16px 30px rgba(0,0,0,0.08); }
+  .package-card.featured{ border-color:var(--coral); background:var(--coral-soft); }
+  .package-card .badge{ display:inline-block; background:var(--teal-soft); color:var(--teal-dark); font-size:0.68rem; font-weight:800; padding:4px 10px; border-radius:999px; margin-bottom:10px; }
+  .package-card.featured .badge{ background:var(--coral); color:#fff; }
+  .package-card h3{ font-size:0.98rem; font-weight:700; line-height:1.25; }
+  .package-card .price{ font-family:'Poppins',sans-serif; font-weight:800; font-size:1.3rem; color:var(--ink); margin-top:8px; }
+  .package-card .price span{ font-size:0.75rem; font-weight:500; color:var(--ink-faint); }
+  .package-card p{ color:var(--ink-soft); font-size:0.8rem; margin-top:8px; }
+
+  /* ============ TEAL PROMO BANNER ============ */
+  .promo-teal{ background:var(--teal-soft); border-radius:24px; padding:30px 26px; max-width:520px; margin:0 auto; position:relative; overflow:hidden; }
+  .promo-teal h2{ color:var(--ink); font-size:1.4rem; font-weight:700; max-width:65%; line-height:1.3; }
+  .promo-teal p{ color:var(--ink-soft); font-size:0.88rem; margin-top:8px; max-width:65%; }
+  .promo-teal .btn{ margin-top:18px; }
+  .promo-teal .icon-graphic{ position:absolute; right:14px; top:50%; transform:translateY(-50%); width:90px; height:90px; }
+
+  /* ============ FEATURE HIGHLIGHT BLOCK ============ */
+  .feature-block{ max-width:520px; margin:0 auto; padding:0 20px; }
+  .feature-inner{ display:flex; align-items:center; gap:18px; background:#fff; border:1px solid var(--border); border-radius:20px; padding:22px; box-shadow:0 6px 24px rgba(0,0,0,0.04); }
+  .feature-text{ flex:1; }
+  .feature-text h3{ font-size:1.05rem; font-weight:700; }
+  .feature-text p{ color:var(--ink-soft); font-size:0.85rem; margin-top:6px; }
+  .feature-badge{ display:inline-flex; align-items:center; gap:6px; background:var(--coral-soft); color:var(--coral-dark); font-size:0.75rem; font-weight:700; padding:5px 12px; border-radius:999px; margin-top:12px; }
+  .feature-explore{ color:var(--teal); font-weight:700; font-size:0.85rem; margin-top:12px; display:inline-flex; align-items:center; gap:4px; }
+  .feature-icon{ width:64px; height:64px; border-radius:16px; background:linear-gradient(135deg, var(--coral), #ff8a8d); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .feature-icon svg{ width:30px; height:30px; color:#fff; }
+
+  /* ============ WHY US / ASSISTED-PLANS STYLE ============ */
+  .why-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:520px; margin:0 auto; padding:0 20px; }
+  .why-card{ background:var(--bg-soft); border-radius:18px; padding:22px 16px; text-align:left; }
+  .why-icon{ width:44px; height:44px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .why-icon svg{ width:20px; height:20px; color:var(--coral); }
+  .why-card p{ font-size:0.88rem; font-weight:600; color:var(--ink); line-height:1.4; }
+
+  /* ============ FOUNDERS ============ */
+  .founders-grid{ display:flex; flex-direction:column; gap:14px; max-width:520px; margin:0 auto; padding:0 20px; }
+  .founder-card{ display:flex; align-items:center; gap:16px; background:#fff; border:1px solid var(--border); border-radius:18px; padding:18px; }
+  .founder-avatar{ width:54px; height:54px; border-radius:50%; background:linear-gradient(135deg, var(--teal), var(--coral)); display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Poppins',sans-serif; font-weight:700; font-size:1.2rem; flex-shrink:0; }
+  .founder-info{ flex:1; }
+  .founder-info h3{ font-size:1rem; font-weight:700; }
+  .founder-info .role{ font-size:0.78rem; color:var(--ink-faint); font-weight:600; }
+  .founder-actions{ display:flex; gap:8px; }
+  .founder-actions a{ width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .founder-actions .call{ background:var(--teal-soft); color:var(--teal-dark); }
+  .founder-actions .wa{ background:#dcfce8; color:#16a34a; }
+  .founder-actions svg{ width:17px; height:17px; }
+
+  /* ============ SOCIAL ============ */
+  .social-row{ display:flex; gap:12px; max-width:520px; margin:0 auto; padding:0 20px; }
+  .social-btn{ flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; background:var(--bg-soft); border-radius:16px; padding:18px 10px; font-size:0.78rem; font-weight:700; }
+  .social-btn svg{ width:22px; height:22px; }
+
+  /* ============ FOOTER ============ */
+  footer{ text-align:center; padding:40px 20px 20px; color:var(--ink-faint); font-size:0.78rem; }
+  footer .foot-logo{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--ink); margin-bottom:6px; }
+
+  /* ============ BOTTOM NAV (app style) ============ */
+  .bottom-nav{ position:fixed; left:0; right:0; bottom:0; z-index:100; background:#fff; border-top:1px solid var(--border); box-shadow:0 -4px 20px rgba(0,0,0,0.04); }
+  .bottom-nav-inner{ max-width:520px; margin:0 auto; display:flex; justify-content:space-around; padding:9px 10px 12px; }
+  .bn-item{ display:flex; flex-direction:column; align-items:center; gap:4px; font-size:0.68rem; font-weight:700; color:var(--ink-faint); position:relative; }
+  .bn-item.active{ color:var(--coral); }
+  .bn-item svg{ width:21px; height:21px; }
+  .bn-item .dot{ width:4px; height:4px; border-radius:50%; background:var(--coral); position:absolute; top:-6px; opacity:0; }
+  .bn-item.active .dot{ opacity:1; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (max-width:400px){
+    .peek-card{ flex:0 0 70%; }
+    .promo-graphic{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="offer-bar">
+  <div class="offer-pill">🎁 Free Demo Offer <span class="tag">| Limited Slots This Month</span></div>
+</div>
+
+<header id="top">
+  <div class="navbar">
+    <button class="hamburger" id="menuToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true"><a href="#packages">Packages</a><a href="#founders">Founders</a><a href="#contact">Contact</a></div>
+    <div class="logo">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div class="logo-text">The<span>WeBros</span></div>
+    </div>
+  </div>
+
+  <div class="tagline">Founder-Built Websites <b>|</b> Zero Agency Markup</div>
+
+  <div class="tabs">
+    <a class="tab active" href="#packages">Flat</a>
+    <a class="tab" href="#packages">Animated</a>
+    <a class="tab" href="#packages">Signature</a>
+  </div>
+
+  <a class="cta-bar" href="https://wa.me/919588386782?text=Hi%20Jai%2C%20I%20want%20a%20free%20demo%20for%20my%20business%20website." target="_blank" rel="noopener">
+    <span>Tell us about your business...</span>
+    <div class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+  </a>
+</header>
+
+<div class="wrap">
+  <div class="promo-dark reveal">
+    <h2>Looking for a Website That Converts?</h2>
+    <ul>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Fixed pricing, no hidden costs</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Delivered by the founders, no outsourcing</li>
+    </ul>
+    <a class="btn btn-coral" href="https://wa.me/919588386782?text=Hi%20Jai%2C%20I%20want%20to%20book%20a%20FREE%20DEMO%20for%20my%20website." target="_blank" rel="noopener">Book FREE Demo</a>
+    <svg class="promo-graphic" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#ff5a5f" stroke-width="2" opacity="0.5"/><path d="M30 60 L45 45 L58 55 L72 35" stroke="#ff5a5f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><circle cx="72" cy="35" r="4" fill="#ff5a5f"/></svg>
+  </div>
+</div>
+
+<section id="packages">
+  <div class="section-head">
+    <h2>Our Packages</h2>
+    <a class="see-all" href="#all-packages">See All <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+  </div>
+  <div class="peek-row reveal">
+    <div class="peek-card p1">
+      <div class="inner">
+        <div class="peek-badge">FROM ₹4,499</div>
+        <h3>Flat Website</h3>
+      </div>
+    </div>
+    <div class="peek-card p2">
+      <div class="inner">
+        <div class="peek-badge">FROM ₹9,899</div>
+        <h3>3D + Framer Motion</h3>
+      </div>
+    </div>
+  </div>
+
+  <div id="all-packages" class="packages-grid">
+    <div class="package-card reveal">
+      <div class="badge">Simple</div>
+      <h3>Flat Website</h3>
+      <div class="price">₹4,499<span>/-</span></div>
+      <p>Clean, static site — no animation. Fast and professional.</p>
+    </div>
+    <div class="package-card reveal">
+      <div class="badge">Popular</div>
+      <h3>Animated + Photos</h3>
+      <div class="price">₹6,799<span>/-</span></div>
+      <p>Motion and real photography woven into your brand.</p>
+    </div>
+    <div class="package-card featured reveal">
+      <div class="badge">Signature</div>
+      <h3>3D + Framer Motion</h3>
+      <div class="price">₹9,899<span>/-</span></div>
+      <p>Interactive 3D and cutting-edge motion graphics.</p>
+    </div>
+    <div class="package-card reveal">
+      <div class="badge">Growth</div>
+      <h3>Instagram &amp; Facebook</h3>
+      <div class="price">₹5,499<span>/-</span></div>
+      <p>Content, handling and engagement, fully managed.</p>
+    </div>
+    <div class="package-card reveal">
+      <div class="badge">Local Growth</div>
+      <h3>GBP (Google Listing Making)</h3>
+      <div class="price">₹2,500<span>/-</span></div>
+      <p>Google Business Profile setup and listing optimization.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="promo-teal reveal">
+    <h2>Live in as Little as 3 Days</h2>
+    <p>Share your brief and we'll get you a working preview fast.</p>
+    <a class="btn btn-teal" href="https://wa.me/919588386782?text=Hi%20Jai%2C%20I%20want%20to%20book%20a%20FREE%20DEMO%20for%20my%20website." target="_blank" rel="noopener">Book Free Demo</a>
+    <svg class="icon-graphic" viewBox="0 0 100 100" fill="none"><rect x="20" y="30" width="60" height="40" rx="4" fill="#0d9488" opacity="0.15"/><rect x="26" y="36" width="48" height="28" rx="2" fill="#0d9488" opacity="0.3"/><circle cx="50" cy="50" r="8" fill="#0d9488"/></svg>
+  </div>
+</div>
+
+<section>
+  <div class="feature-block reveal">
+    <div class="feature-inner">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 11-14h-8l1-6z"/></svg></div>
+      <div class="feature-text">
+        <h3>Signature Package</h3>
+        <p>3D animation, Framer Motion-grade graphics, custom photo and video.</p>
+        <div class="feature-badge">⚡ MOST CHOSEN</div>
+        <br>
+        <a class="feature-explore" href="#all-packages">Explore <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><h2>Why Work With Us</h2></div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg></div>
+      <p>Direct access to the founders, start to finish</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <p>Fixed pricing, no surprise charges</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <p>3–10 day delivery, depending on package</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <p>You review and approve before it goes live</p>
+    </div>
+  </div>
+</section>
+
+<section id="founders">
+  <div class="section-head"><h2>The Founders</h2></div>
+  <div class="founders-grid">
+    <div class="founder-card reveal">
+      <div class="founder-avatar">J</div>
+      <div class="founder-info"><h3>Jai</h3><div class="role">Founder &amp; Developer</div></div>
+      <div class="founder-actions">
+        <a class="call" href="tel:9588386782"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+        <a class="wa" href="https://wa.me/919588386782" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg></a>
+      </div>
+    </div>
+    <div class="founder-card reveal">
+      <div class="founder-avatar">V</div>
+      <div class="founder-info"><h3>Vipul</h3><div class="role">Founder &amp; Developer</div></div>
+      <div class="founder-actions">
+        <a class="call" href="tel:8529340581"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+        <a class="wa" href="https://wa.me/918529340581" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-head"><h2>Connect With Us</h2></div>
+  <div class="social-row">
+    <a class="social-btn" href="https://www.instagram.com/thewebros?stkn=MTNmZnYyd2lzdXMwOA==" target="_blank" rel="noopener" style="color:#e1306c;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>Instagram</a>
+    <a class="social-btn" href="https://www.facebook.com/profile.php?id=61594069365586" target="_blank" rel="noopener" style="color:#1877f2;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
+    <a class="social-btn" href="mailto:thewebros12@gmail.com" style="color:var(--coral);"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Gmail</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">TheWeBros</div>
+  <p>&copy; 2026 TheWeBros. Designed &amp; built by Jai &amp; Vipul.</p>
+</footer>
+
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a class="bn-item active" href="#top" data-target="top"><div class="dot"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-8h14l2 8"/><path d="M3 12h18v7H3z"/><path d="M9 19v-4h6v4"/></svg>Home</a>
+    <a class="bn-item" href="#all-packages" data-target="all-packages"><div class="dot"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>Packages</a>
+    <a class="bn-item" href="#founders" data-target="founders"><div class="dot"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>Founders</a>
+    <a class="bn-item" href="#contact" data-target="contact"><div class="dot"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Contact</a>
+  </div>
+</nav>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.15, rootMargin:'0px 0px -50px 0px' });
+  revealEls.forEach(el=>io.observe(el));
+
+  // Reliable click-based smooth scroll (native #hash jumps can silently fail
+  // inside a sandboxed artifact iframe, so we drive it with scrollIntoView instead)
+  function goTo(id){
+    if(id === 'top'){ window.scrollTo({ top:0, behavior:'smooth' }); return; }
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      goTo(a.getAttribute('href').slice(1) || 'top');
+    });
+  });
+
+  // Bottom nav: active state follows scroll position
+  const header = document.querySelector('header');
+  const bnItems = document.querySelectorAll('.bn-item');
+  const targets = [...bnItems].map(b=> b.dataset.target === 'top' ? document.body : document.getElementById(b.dataset.target)).filter(Boolean);
+  window.addEventListener('scroll', ()=>{
+    let current = 0;
+    targets.forEach((t,i)=>{ if(window.scrollY + 160 >= (t.offsetTop||0)) current = i; });
+    bnItems.forEach((b,i)=> b.classList.toggle('active', i === current));
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive:true });
+
+  // Package tabs: tappable, switches the visual active state
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Sticky header shadow on scroll
+  const menuToggle=document.getElementById('menuToggle');
+  const mobileMenu=document.getElementById('mobileMenu');
+  menuToggle.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(open));mobileMenu.setAttribute('aria-hidden',String(!open));});
+  mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mobileMenu.classList.remove('open');menuToggle.setAttribute('aria-expanded','false');mobileMenu.setAttribute('aria-hidden','true');}));
+  document.querySelectorAll('.package-card').forEach(card=>{card.setAttribute('tabindex','0');card.style.cursor='pointer';const title=card.querySelector('h3')?.textContent||'package';const price=card.querySelector('.price')?.textContent||'';const enquire=()=>window.open('https://wa.me/919588386782?text='+encodeURIComponent('Hi Jai, I am interested in '+title+' ('+price+'). Please share details.'),'_blank','noopener');card.addEventListener('click',enquire);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();enquire();}});});
+</script>
+
+</body>
+</html>
